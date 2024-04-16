@@ -2,6 +2,7 @@ package dataFetcher
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 )
@@ -41,10 +42,12 @@ func convertJSONResToStruct[T Post | Comment](url string) ([]T, error) {
 	return contents, nil
 }
 
-func GetPosts(url string) ([]Post, error) {
-	return convertJSONResToStruct[Post](url)
+func GetPosts(UserID int) ([]Post, error) {
+	endpoint := fmt.Sprintf("https://jsonplaceholder.typicode.com/posts?userId=%d", UserID)
+	return convertJSONResToStruct[Post](endpoint)
 }
 
-func GetComments(url string) ([]Comment, error) {
-	return convertJSONResToStruct[Comment](url)
+func GetComments(UserID int) ([]Comment, error) {
+	endpoint := fmt.Sprintf("https://jsonplaceholder.typicode.com/comments?userId=%d", UserID)
+	return convertJSONResToStruct[Comment](endpoint)
 }

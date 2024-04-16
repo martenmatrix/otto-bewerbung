@@ -18,7 +18,7 @@ func TestGetPosts(t *testing.T) {
 	}))
 	defer fakeServer.Close()
 
-	res, err := GetPosts(fakeServer.URL)
+	res, err := convertJSONResToStruct[Post](fakeServer.URL)
 	if err != nil {
 		t.Errorf("Error getting posts: %v", err)
 	}
@@ -44,7 +44,7 @@ func TestGetComments(t *testing.T) {
 	}))
 	defer fakeServer.Close()
 
-	res, err := GetComments(fakeServer.URL)
+	res, err := convertJSONResToStruct[Comment](fakeServer.URL)
 	if err != nil {
 		t.Errorf("Error getting posts: %v", err)
 	}
