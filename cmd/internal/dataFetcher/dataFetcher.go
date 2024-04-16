@@ -42,11 +42,17 @@ func convertJSONResToStruct[T Post | Comment](url string) ([]T, error) {
 	return contents, nil
 }
 
+/*
+GetPosts gets all posts for a specific UserID from the JSONPlaceholder API and returns it as an array of Post's.
+*/
 func GetPosts(UserID int) ([]Post, error) {
 	endpoint := fmt.Sprintf("https://jsonplaceholder.typicode.com/posts?userId=%d", UserID)
 	return convertJSONResToStruct[Post](endpoint)
 }
 
+/*
+GetComments gets all posts for a specific UserID from the JSONPlaceholder API and returns it as an array of Comment's.
+*/
 func GetComments(UserID int) ([]Comment, error) {
 	endpoint := fmt.Sprintf("https://jsonplaceholder.typicode.com/comments?userId=%d", UserID)
 	return convertJSONResToStruct[Comment](endpoint)
