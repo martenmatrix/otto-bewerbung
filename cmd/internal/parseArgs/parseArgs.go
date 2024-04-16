@@ -3,8 +3,8 @@ package parseArgs
 import "strings"
 
 type Arguments struct {
-	userID string
-	filter string
+	UserID string
+	Filter string
 }
 
 /*
@@ -18,9 +18,9 @@ func ParseArgs(args []string) Arguments {
 		lowercaseArg := strings.ToLower(arg)
 
 		if lowercaseArg == "-userid" {
-			extractedArgs.userID = args[index+1]
+			extractedArgs.UserID = args[index+1]
 		} else if lowercaseArg == "-filter" {
-			extractedArgs.filter = args[index+1]
+			extractedArgs.Filter = args[index+1]
 		}
 	}
 
