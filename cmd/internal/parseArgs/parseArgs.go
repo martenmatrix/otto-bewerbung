@@ -1,9 +1,12 @@
 package parseArgs
 
-import "strings"
+import (
+	"strconv"
+	"strings"
+)
 
 type Arguments struct {
-	UserID string
+	UserID int
 	Filter string
 }
 
@@ -11,18 +14,25 @@ type Arguments struct {
 ParseArgs takes an array of strings, which is usually returned by os.Args
 and extracts and returns the values specified for userID and filter.
 */
-func ParseArgs(args []string) Arguments {
+func ParseArgs(args []string) (Arguments, error) {
 	extractedArgs := Arguments{}
 
 	for index, arg := range args {
 		lowercaseArg := strings.ToLower(arg)
 
 		if lowercaseArg == "-userid" {
-			extractedArgs.UserID = args[index+1]
+			userIdString := args[index+1]
+
+			userId, err := strconv.Atoi(userIdString)
+			if err != nil {
+				return extractedArgs, err
+			}
+
+			extractedArgs.UserID = userId
 		} else if lowercaseArg == "-filter" {
 			extractedArgs.Filter = args[index+1]
 		}
 	}
 
-	return extractedArgs
+	return extractedArgs, nil
 }
