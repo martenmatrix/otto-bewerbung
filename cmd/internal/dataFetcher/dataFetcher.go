@@ -42,18 +42,30 @@ func convertJSONResToStruct[T Post | Comment](url string) ([]T, error) {
 	return contents, nil
 }
 
+func getEndpointWithQueryParameters(posts []Post) string {
+	endpoint := "https://jsonplaceholder.typicode.com/comments?"
+
+	for _, post := range posts {
+		// every comment has a postId, which is the id of the original post, under which the comment was written
+		endpoint += fmt.Sprintf("&postId=%d", post.ID)
+	}
+
+	return endpoint
+}
+
 /*
 GetPosts gets all posts for a specific UserID from the JSONPlaceholder API and returns it as an array of Post's.
 */
-func GetPosts(UserID int) ([]Post, error) {
-	endpoint := fmt.Sprintf("https://jsonplaceholder.typicode.com/posts?userId=%d", UserID)
+func GetPosts(userID int) ([]Post, error) {
+	endpoint := fmt.Sprintf("https://jsonplaceholder.typicode.com/posts?userId=%d", userID)
+
 	return convertJSONResToStruct[Post](endpoint)
 }
 
 /*
-GetComments gets all posts for a specific UserID from the JSONPlaceholder API and returns it as an array of Comment's.
+GetComments gets all comments, which are related to the passed Post's from the JSONPlaceholder API and returns it as an array of Comment's.
 */
-func GetComments(UserID int) ([]Comment, error) {
-	endpoint := fmt.Sprintf("https://jsonplaceholder.typicode.com/comments?userId=%d", UserID)
+func GetComments(posts []Post) ([]Comment, error) {
+	endpoint := getEndpointWithQueryParameters(posts)
 	return convertJSONResToStruct[Comment](endpoint)
 }

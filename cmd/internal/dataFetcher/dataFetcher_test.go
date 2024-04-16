@@ -58,3 +58,19 @@ func TestGetComments(t *testing.T) {
 		t.Errorf("GetPosts() = \n%v\nwant\n%v", res, shouldReturn)
 	}
 }
+
+func TestReturnsCorrectQueryParams(t *testing.T) {
+	mockPosts := []Post{
+		{UserID: 1, ID: 1, Title: "sunt aut facere repellat provident occaecati excepturi optio reprehenderit", Body: "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"},
+		{UserID: 1, ID: 2, Title: "qui est esse", Body: "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"},
+	}
+
+	shouldReturn := "https://jsonplaceholder.typicode.com/comments?&postId=1&postId=2"
+
+	res := getEndpointWithQueryParameters(mockPosts)
+
+	if res != shouldReturn {
+		t.Errorf("GetPosts() = \n%v\nwant\n%v", res, shouldReturn)
+	}
+
+}
